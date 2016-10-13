@@ -1,0 +1,11 @@
+--- Makefile.ori	2016-10-13 11:24:32.187940263 +0200
++++ Makefile	2016-10-13 11:26:46.776359018 +0200
+@@ -138,7 +138,7 @@
+ 	fi
+ 	build_tools/uninstall-modules dahdi $(KVERS)
+ endif
+-	$(KMAKE) INSTALL_MOD_PATH=$(DESTDIR) INSTALL_MOD_DIR=dahdi modules_install
++	$(KMAKE) INSTALL_MOD_PATH=$(DESTDIR) INSTALL_MOD_DIR=extra/dahdi modules_install
+ 	[ `id -u` = 0 ] && /sbin/depmod -a $(KVERS) || :
+ 
+ uninstall-modules:

@@ -1,5 +1,5 @@
 %define   kmodtool bash /usr/lib/rpm/redhat/kmodtool
-%{!?kversion: %define kversion 3.10.0_327.10.1.el7}
+%{!?kversion: %define kversion 3.10.0-327.el7}
 
 %define kmod_name dahdi-linux
 %define kverrel %(%{kmodtool} verrel %{?kversion} 2>/dev/null)
@@ -55,6 +55,7 @@ Patch1: 0001-oslec.patch
 #Patch2: 0001-openvox.patch
 #Patch3: 0001-allo.com.patch
 Patch4: 0001-rhino.patch
+Patch7: install_mod_dir.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 URL: http://www.asterisk.org/
 Vendor: Digium, Inc.
@@ -63,6 +64,7 @@ Requires: dahdi-linux = %{version}
 BuildRequires: kernel = %(echo %{kverrel} | sed -e 's/\(.*\)\.[^\.]*$/\1/')
 BuildRequires: redhat-rpm-config
 BuildRequires: wget
+BuildRequires: kabi-yum-plugins
 
 %description
 The open source DAHDI project
@@ -126,6 +128,9 @@ cd %{kmod_name}-%{version}/
 #%patch2 -p1
 #%patch3 -p1
 %patch4 -p1
+%if "%{distname}" != "sles"
+%patch7 -p0
+%endif
 
 echo %{version} > .version
 cd ../
