@@ -1,5 +1,5 @@
 %define   kmodtool bash /usr/lib/rpm/redhat/kmodtool
-%{!?kversion: %define kversion 3.10.0-327.el7}
+%{!?kversion: %define kversion 3.10.0-514.el7}
 
 %define kmod_name dahdi-linux
 %define kverrel %(%{kmodtool} verrel %{?kversion} 2>/dev/null)
@@ -81,7 +81,7 @@ Requires:   	kmod
 # FIXME Replace when kernel version updates
 #Provides:         kernel-modules >= %{kversion}
 Requires: dahdi-linux = %{version}
-BuildRequires: kernel-devel
+BuildRequires: kernel-devel = %(echo %{kverrel} | sed -e 's/\(.*\)\.[^\.]*$/\1/')
 %description   -n kmod-dahdi-linux
 This package provides the dahdi-linux kernel modules built for
 the Linux kernel %{kversion} for the %{_target_cpu}
