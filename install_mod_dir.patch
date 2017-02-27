@@ -5,7 +5,7 @@
  	build_tools/uninstall-modules dahdi $(KVERS)
  endif
 -	$(KMAKE) INSTALL_MOD_PATH=$(DESTDIR) INSTALL_MOD_DIR=dahdi modules_install
-+	$(KMAKE) INSTALL_MOD_PATH=$(DESTDIR) INSTALL_MOD_DIR=extra/dahdi modules_install
++	$(KMAKE) INSTALL_MOD_PATH=$(DESTDIR) INSTALL_MOD_DIR=extra/dahdi-linux modules_install
  	[ `id -u` = 0 ] && /sbin/depmod -a $(KVERS) || :
  
  uninstall-modules:
