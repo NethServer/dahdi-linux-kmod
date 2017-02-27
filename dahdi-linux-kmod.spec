@@ -50,6 +50,7 @@ Source3: rcbfx.fw
 Source4: GpakDsp10.fw
 Source5: DspLoader.fw
 Source6: GpakDsp0704.fw
+Source7: modules-load.conf
 Patch0: dahdi-no-fwload.diff
 Patch1: 0001-oslec.patch
 #Patch2: 0001-openvox.patch
@@ -88,35 +89,38 @@ the Linux kernel %{kversion} for the %{_target_cpu}
 family of processors.
 
 
-#%post          -n kmod-dahdi-linux
-#if [ -e "/boot/System.map-%{kversion}" ]; then
-#    /sbin/depmod -aeF "/boot/System.map-%{kversion}" "%{kversion}" > /dev/null || :
-#fi
+%post          -n kmod-dahdi-linux
+if [ -e "/boot/System.map-%{kversion}.%{_target_cpu}" ]; then
+    /sbin/depmod -aeF "/boot/System.map-%{kversion}.%{_target_cpu}" "%{kversion}.%{_target_cpu}" > /dev/null || :
+fi
 
 #Only run find if we have that directory
-#if [ -e "/lib/modules/%{kversion}/extra/dahdi-linux" ]; then
-#  modules=( $(find /lib/modules/%{kversion}/extra/dahdi-linux | grep '\.ko$' 2>/dev/null) )
-#  if [ -x "/sbin/weak-modules" ]; then
-#      printf '%s\n' "${modules[@]}"     | /sbin/weak-modules --add-modules
-#  fi
-#fi
-#%preun         -n kmod-dahdi-linux
-#rpm -ql kmod-dahdi-linux-%{kmod_version}-%{kmod_release}.%{_target_cpu} | grep '\.ko$' > /var/run/rpm-kmod-dahdi-linux-modules
-#%postun        -n kmod-dahdi-linux
-#if [ -e "/boot/System.map-%{kversion}" ]; then
-#    /sbin/depmod -aeF "/boot/System.map-%{kversion}" "%{kversion}" > /dev/null || :
-#fi
+if [ -e "/lib/modules/%{kversion}.%{_target_cpu}/extra/dahdi" ]; then
+  modules=( $(find /lib/modules/%{kversion}.%{_target_cpu}/extra/dahdi | grep '\.ko$' 2>/dev/null) )
+  if [ -x "/sbin/weak-modules" ]; then
+      printf '%s\n' "${modules[@]}"  | /sbin/weak-modules --add-modules
+  fi
+fi
 
-#modules=( $(cat /var/run/rpm-kmod-dahdi-linux-modules) )
-#rm /var/run/rpm-kmod-dahdi-linux-modules
-#if [ -x "/sbin/weak-modules" ]; then
-#    printf '%s\n' "${modules[@]}"     | /sbin/weak-modules --remove-modules
-#fi
+%preun         -n kmod-dahdi-linux
+rpm -ql kmod-dahdi-linux-%{kmod_version}-%{kmod_release}.%{_target_cpu} | grep '\.ko$' > /var/run/rpm-kmod-dahdi-linux-modules
+
+%postun        -n kmod-dahdi-linux
+if [ -e "/boot/System.map-%{kversion}.%{_target_cpu}" ]; then
+    /sbin/depmod -aeF "/boot/System.map-%{kversion}.%{_target_cpu}" "%{kversion}.%{_target_cpu}" > /dev/null || :
+fi
+
+modules=( $(cat /var/run/rpm-kmod-dahdi-linux-modules) )
+rm /var/run/rpm-kmod-dahdi-linux-modules
+if [ -x "/sbin/weak-modules" ]; then
+    printf '%s\n' "${modules[@]}"     | /sbin/weak-modules --remove-modules
+fi
 
 
 %files         -n kmod-dahdi-linux
 %defattr(644,root,root,755)
 /lib/modules/%{kversion}.%{_target_cpu}
+%config /etc/modules-load.d/dahdi.conf
 
 %prep
 %setup -c -n %{kmod_name}-%{version}
@@ -177,6 +181,8 @@ do
 		%endif
 		popd
 done
+mkdir -p %{buildroot}/etc/modules-load.d
+mv %{S:7} %{buildroot}/etc/modules-load.d/dahdi.conf
 
 %clean
 cd $RPM_BUILD_DIR
