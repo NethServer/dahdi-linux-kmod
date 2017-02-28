@@ -9,3 +9,8 @@ mock --resultdir=. -r nethserver-7-x86_64 -D 'dist .ns7' -D 'version 2.11.1' -D 
 
 mock --resultdir=. -r nethserver-7-x86_64 -D 'dist .ns7' -D 'version 2.11.1' -D 'release 3.10.0_514.el7'  dahdi-linux-kmod-2.11.1-3.10.0_514.el7.ns7.src.rpm
 ```
+
+If you need to increase the current spec release, add it to the dist tag:
+```
+-D 'dist .1.ns7'
+```
