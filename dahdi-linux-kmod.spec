@@ -97,3 +97,11 @@ mv %{S:7} %{buildroot}/etc/modules-load.d/kmod-dahdi-linux.conf
 cd $RPM_BUILD_DIR
 %{__rm} -rf %{kmod_name}-%{version}
 %{__rm} -rf $RPM_BUILD_ROOT
+
+
+%changelog
+
+* Thu Oct 19 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 2.11.1-3.10.0-693.el7.2.ns7
+- Rebuild for kernel 3.10.0-693 (RHEL 7.4)
+- Remove dahdi_echocan_oslec.ko module (not compatibile with the new kernel)
+
