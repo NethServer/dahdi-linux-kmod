@@ -1,5 +1,5 @@
 %define   kmodtool bash /usr/lib/rpm/redhat/kmodtool
-%{!?kversion: %define kversion 3.10.0-514.el7}
+%{!?kversion: %define kversion 3.10.0-693.el7}
 
 %define kmod_name dahdi-linux
 %define kverrel %(%{kmodtool} verrel %{?kversion} 2>/dev/null)
