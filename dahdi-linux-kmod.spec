@@ -24,7 +24,6 @@ Source6: GpakDsp0704.fw
 Source7: modules-load.conf
 Source10: kmodtool-dahdi-el7.sh
 Patch0: dahdi-no-fwload.diff
-Patch1: 0001-oslec.patch
 Patch4: 0001-rhino.patch
 Patch7: install_mod_dir.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
@@ -51,7 +50,6 @@ The open source DAHDI project
 cd %{kmod_name}-%{version}/
 
 %patch0 -p0
-%patch1 -p1
 %patch4 -p1
 %patch7 -p0
 
