@@ -1,5 +1,5 @@
 %define   kmodtool bash /usr/lib/rpm/redhat/kmodtool
-%{!?kversion: %define kversion 3.10.0-693.el7}
+%{!?kversion: %define kversion 3.10.0-862.el7}
 
 %define kmod_name dahdi-linux
 %define kverrel %(%{kmodtool} verrel %{?kversion} 2>/dev/null)
@@ -100,6 +100,9 @@ cd $RPM_BUILD_DIR
 
 
 %changelog
+
+* Wed May 16 2018 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 2.11.1-3.10.0-862.el7.3.ns7
+- Rebuild for kernel 3.10.0-862 (RHEL 7.5)
 
 * Thu Oct 19 2017 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 2.11.1-3.10.0-693.el7.2.ns7
 - Rebuild for kernel 3.10.0-693 (RHEL 7.4)
