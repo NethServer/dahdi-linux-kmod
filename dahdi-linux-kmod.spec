@@ -100,6 +100,8 @@ cd $RPM_BUILD_DIR
 
 
 %changelog
+* Wed Sep 25 2019 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 2.11.1-3.10.0-1062.el7.1.ns7
+- Rebuild for kernel 3.10.0-1062 (RHEL 7.7)
 
 * Mon Nov 12 2018 Giacomo Sanchietti <giacomo.sanchietti@nethesis.it> - 2.11.1-3.10.0-957.el7.1.ns7
 - Rebuild for kernel 3.10.0-957 (RHEL 7.6)
